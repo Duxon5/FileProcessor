@@ -10,7 +10,7 @@ import javax.swing.ScrollPaneConstants;
 
 import interfaces.PanelFolder;
 
-public class FolderOnePanel extends JPanel implements PanelFolder {
+public class FolderThreePanel extends JPanel implements PanelFolder {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class FolderOnePanel extends JPanel implements PanelFolder {
 	private JTextArea textArea;
 	
 	
-	public FolderOnePanel() {
+	public FolderThreePanel() {
 		initialize();
 	}
 
@@ -36,7 +36,7 @@ public class FolderOnePanel extends JPanel implements PanelFolder {
 		addAllComponentsToPanel();
 		
 		textArea.append("==================================================================\n");
-		textArea.append("==========================LOG - FOLDER 1==========================\n");
+		textArea.append("==========================LOG - FOLDER 3==========================\n");
 		textArea.append("==================================================================\n");
 				
 		return panel;

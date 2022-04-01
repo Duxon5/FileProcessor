@@ -27,6 +27,8 @@ public class ProcessorInterface extends JFrame {
 	private JTabbedPane tabGroup;
 	private SettingsPanel settingsPanel;
 	private FolderOnePanel folderOnePanel;
+	private FolderTwoPanel folderTwoPanel;
+	private FolderThreePanel folderThreePanel;
 	private Tab tab;
 	
 	public void initialize() {
@@ -61,6 +63,8 @@ public class ProcessorInterface extends JFrame {
 		tabGroup = new JTabbedPane();
 		settingsPanel = new SettingsPanel();
 		folderOnePanel = new FolderOnePanel();
+		folderTwoPanel = new FolderTwoPanel();
+		folderThreePanel = new FolderThreePanel();
 		
 		tab = new Tab();
 	}
@@ -125,7 +129,9 @@ public class ProcessorInterface extends JFrame {
 	
 	private void createTabs() {
 		tabGroup.add("Settings", settingsPanel.initialize());
-		tabGroup.add("Folder 1", folderOnePanel);
+		tabGroup.add("Folder 1", folderOnePanel.initialize());
+		tabGroup.add("Folder 2", folderTwoPanel.initialize());
+		tabGroup.add("Folder 3", folderThreePanel.initialize());
 
 		if(tabGroup.getSelectedIndex() == tab.SETTINGS) {
 			processStatus.setVisible(false);

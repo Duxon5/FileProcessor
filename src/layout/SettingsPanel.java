@@ -11,9 +11,9 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import interfaces.PanelFolder;
+import interfaces.Panel;
 
-public class SettingsPanel extends JPanel implements PanelFolder{
+public class SettingsPanel extends JPanel implements Panel {
 
 	private static final long serialVersionUID = 1L;
 	
