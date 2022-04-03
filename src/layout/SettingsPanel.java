@@ -2,6 +2,8 @@ package layout;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -46,6 +48,13 @@ public class SettingsPanel extends JPanel implements Panel {
 	private JButton startFolder3;
 	private JButton stopFolder3;
 	
+	private Thread threadFolder1 = new Thread();
+	private Thread threadFolder2 = new Thread();
+	private Thread threadFolder3 = new Thread();
+	
+	int timerFolder1 = 10;
+	int timerFolder2 = 10;
+	int timerFolder3 = 10;
 	
 	public SettingsPanel() {
 		initialize();
@@ -64,6 +73,54 @@ public class SettingsPanel extends JPanel implements Panel {
 		setAllAlignments();
 		setAllBounds();
 		addAllComponentsToPanel();
+		
+		startAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startAllFolders_addActionListener(e);
+            }
+		});
+		
+		startFolder1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startFolder1_addActionListener(e);
+            }
+		});
+		
+		startFolder2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startFolder2_addActionListener(e);
+            }
+		});
+		
+		startFolder3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startFolder3_addActionListener(e);
+            }
+		});
+		
+		stopAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopAllFolders_addActionListener(e);
+            }
+		});
+		
+		stopFolder1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopFolder1_addActionListener(e);
+            }
+		});
+		
+		stopFolder2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopFolder2_addActionListener(e);
+            }
+		});
+		
+		stopFolder3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				stopFolder3_addActionListener(e);
+            }
+		});
 		
 		return panel;
 	}
@@ -405,4 +462,193 @@ public class SettingsPanel extends JPanel implements Panel {
 		panel.add(stopFolder3);		
 	}
 	
+	private void startAllFolders_addActionListener(ActionEvent e) {
+		startProcessAllFolders();
+	}
+	
+	private void startFolder1_addActionListener(ActionEvent e) {
+		try {
+			startProcessFolder1();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private void startFolder2_addActionListener(ActionEvent e) {
+		try {
+			startProcessFolder2();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private void startFolder3_addActionListener(ActionEvent e) {
+		try {
+			startProcessFolder3();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private void stopAllFolders_addActionListener(ActionEvent e) {
+		stopProcessAllFolders();
+	}
+	
+	private void stopFolder1_addActionListener(ActionEvent e) {
+		stopProcessFolder1();
+	}
+	
+	private void stopFolder2_addActionListener(ActionEvent e) {
+		stopProcessFolder2();
+	}
+	
+	private void stopFolder3_addActionListener(ActionEvent e) {
+		stopProcessFolder3();
+	}
+	
+	private void startProcessAllFolders() {
+		try {
+			startProcessFolder1();
+			startProcessFolder2();
+			startProcessFolder3();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void startProcessFolder1() throws InterruptedException {
+		processStatusFolder1.setText("Status: Started");
+		processStatusFolder1.setBackground(Color.GREEN);
+		
+		processTimerFolder1.setText("Starting...");
+		
+		if(threadFolder1.isAlive()) {
+			timerFolder1 = 10;
+			threadFolder1.stop();
+		}
+		
+		threadFolder1 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+					while (true) {
+						processTimerFolder1.setText(intToTime(timerFolder1));
+						timerFolder1--;
+						Thread.sleep(1000);
+						if(timerFolder1 == -1) {
+							timerFolder1 = 10;
+						}
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		threadFolder1.start();
+	}
+	
+	private void startProcessFolder2() throws InterruptedException {
+		processStatusFolder2.setText("Status: Started");
+		processStatusFolder2.setBackground(Color.GREEN);
+		
+		processTimerFolder2.setText("Starting...");
+		
+		if(threadFolder2.isAlive()) {
+			timerFolder2 = 10;
+			threadFolder2.stop();
+		}
+		
+		threadFolder2 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+					while (true) {
+						processTimerFolder2.setText(intToTime(timerFolder2));
+						timerFolder2--;
+						Thread.sleep(1000);
+						if(timerFolder2 == -1) {
+							timerFolder2 = 10;
+						}
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		threadFolder2.start();
+	}
+	
+	private void startProcessFolder3() throws InterruptedException {
+		processStatusFolder3.setText("Status: Started");
+		processStatusFolder3.setBackground(Color.GREEN);
+		
+		processTimerFolder3.setText("Starting...");
+		
+		if(threadFolder3.isAlive()) {
+			timerFolder3 = 10;
+			threadFolder3.stop();
+		}
+		
+		threadFolder3 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+					while (true) {
+						processTimerFolder3.setText(intToTime(timerFolder3));
+						timerFolder3--;
+						Thread.sleep(1000);
+						if(timerFolder3 == -1) {
+							timerFolder3 = 10;
+						}
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		threadFolder3.start();
+	}
+	
+	private void stopProcessAllFolders() {
+		stopProcessFolder1();
+		stopProcessFolder2();
+		stopProcessFolder3();
+	}
+	
+	private void stopProcessFolder1() {
+		timerFolder1 = 10;
+		threadFolder1.stop();
+		processStatusFolder1.setText("Status: Stopped");
+		processStatusFolder1.setBackground(Color.RED);
+		processTimerFolder1.setText("99:99:99");
+		
+	}
+	
+	private void stopProcessFolder2() {
+		timerFolder2 = 10;
+		threadFolder2.stop();
+		processStatusFolder2.setText("Status: Stopped");
+		processStatusFolder2.setBackground(Color.RED);
+		processTimerFolder2.setText("99:99:99");
+	}
+	
+	private void stopProcessFolder3() {
+		timerFolder3 = 10;
+		threadFolder3.stop();
+		processStatusFolder3.setText("Status: Stopped");
+		processStatusFolder3.setBackground(Color.RED);
+		processTimerFolder3.setText("99:99:99");
+	}
+
+	private String intToTime(int iTime) {
+		String sTimeAux = Integer.toString(iTime);
+		sTimeAux = (sTimeAux.length() == 1) ? "0"+sTimeAux : sTimeAux;
+		return "00:00:"+sTimeAux;
+	}
 }

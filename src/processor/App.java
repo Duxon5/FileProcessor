@@ -3,6 +3,7 @@ package processor;
 import javax.swing.UIManager;
 
 import layout.ProcessorInterface;
+import threads.FolderThread;
 
 public class App {
 

@@ -31,6 +31,10 @@ public class ProcessorInterface extends JFrame {
 	private FolderThreePanel folderThreePanel;
 	private Tab tab;
 	
+	public ProcessorInterface() {
+		
+	}
+	
 	public void initialize() {
 		
 		initializeComponents();
@@ -51,6 +55,8 @@ public class ProcessorInterface extends JFrame {
 	        	tabGroup_addChangeListener(e);
 	        }
 	    });
+		
+		
 
 	}
 
@@ -155,6 +161,12 @@ public class ProcessorInterface extends JFrame {
 			processStatus.setVisible(true);
 			processTimer.setVisible(true);
 		}
+	}
+	
+	// TODO: Está dando log catch. Avaliar a criação de 1 status e timer pra cada folder.
+	public void startProcess() {
+//		processStatus.setText("Status: Started");
+//		processTimer.setText("Status: 00:00:04");
 	}
 	
 }
