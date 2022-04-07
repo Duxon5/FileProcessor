@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import entity.FolderPath;
 import interfaces.Panel;
 
 public class SettingsPanel extends JPanel implements Panel {
@@ -56,6 +59,8 @@ public class SettingsPanel extends JPanel implements Panel {
 	int timerFolder2 = 10;
 	int timerFolder3 = 10;
 	
+	List<FolderPath> folderPaths = new ArrayList<>();
+	
 	public SettingsPanel() {
 		initialize();
 	}
@@ -73,6 +78,18 @@ public class SettingsPanel extends JPanel implements Panel {
 		setAllAlignments();
 		setAllBounds();
 		addAllComponentsToPanel();
+		//TODO: Temp
+		fillFolderPaths();
+		
+		// Start with all processes
+		stopProcessAllFolders();
+		
+		
+		chooseFolder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooseFolder_addActionListener(e);
+            }
+		});
 		
 		startAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -462,6 +479,10 @@ public class SettingsPanel extends JPanel implements Panel {
 		panel.add(stopFolder3);		
 	}
 	
+	private void chooseFolder_addActionListener(ActionEvent e) {
+		openChooseFolder();
+	}
+
 	private void startAllFolders_addActionListener(ActionEvent e) {
 		startProcessAllFolders();
 	}
@@ -505,6 +526,12 @@ public class SettingsPanel extends JPanel implements Panel {
 	private void stopFolder3_addActionListener(ActionEvent e) {
 		stopProcessFolder3();
 	}
+	
+	private void openChooseFolder() {
+		ChooseFolder frmChooseFolder = new ChooseFolder();
+		frmChooseFolder.initialize();
+	}
+	
 	
 	private void startProcessAllFolders() {
 		try {
@@ -650,5 +677,11 @@ public class SettingsPanel extends JPanel implements Panel {
 		String sTimeAux = Integer.toString(iTime);
 		sTimeAux = (sTimeAux.length() == 1) ? "0"+sTimeAux : sTimeAux;
 		return "00:00:"+sTimeAux;
+	}
+	
+	private void fillFolderPaths() {
+		folderPaths.add(new FolderPath("Folder 1", "..\\Files\\Folder1"));
+		folderPaths.add(new FolderPath("Folder 2", "..\\Files\\Folder2"));
+		folderPaths.add(new FolderPath("Folder 3", "..\\Files\\Folder3"));
 	}
 }

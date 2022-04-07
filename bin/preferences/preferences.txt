@@ -1,0 +1,1 @@
+C:\Users\Programar\Documents\Projetos\Java\CursoMaven\FileProcessor\Files\Folder1*C:\Users\Programar\Documents\Projetos\Java\CursoMaven\FileProcessor\Files\Folder2*C:\Users\Programar\Documents\Projetos\Java\CursoMaven\FileProcessor\Files\Folder3

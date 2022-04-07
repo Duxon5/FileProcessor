@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 public interface Panel {
 	
-	abstract JPanel initialize();
 	abstract void initializeComponents();
 	abstract void defineSettingsPanel();
 	abstract void setAllTexts();
