@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -17,6 +18,7 @@ import javax.swing.border.Border;
 
 import entity.FolderPath;
 import interfaces.Panel;
+import util.UtilPreferences;
 
 public class SettingsPanel extends JPanel implements Panel {
 
@@ -60,6 +62,8 @@ public class SettingsPanel extends JPanel implements Panel {
 	int timerFolder3 = 10;
 	
 	List<FolderPath> folderPaths = new ArrayList<>();
+	
+	ProcessorInterface processorInterface = new ProcessorInterface();
 	
 	public SettingsPanel() {
 		initialize();
@@ -535,111 +539,171 @@ public class SettingsPanel extends JPanel implements Panel {
 	
 	private void startProcessAllFolders() {
 		try {
-			startProcessFolder1();
-			startProcessFolder2();
-			startProcessFolder3();
+			// If all folders are valid
+			if(UtilPreferences.isAllFolderExists()) {
+				startProcessFolder1();
+				startProcessFolder2();
+				startProcessFolder3();
+			} else {
+				JOptionPane.showMessageDialog(this, "It's needed to define all folders before starting!", "Choose Folder", JOptionPane.INFORMATION_MESSAGE);
+				openChooseFolder(); 
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void startProcessFolder1() throws InterruptedException {
-		processStatusFolder1.setText("Status: Started");
-		processStatusFolder1.setBackground(Color.GREEN);
 		
-		processTimerFolder1.setText("Starting...");
-		
-		if(threadFolder1.isAlive()) {
-			timerFolder1 = 10;
-			threadFolder1.stop();
-		}
-		
-		threadFolder1 = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(2000);
-					while (true) {
-						processTimerFolder1.setText(intToTime(timerFolder1));
-						timerFolder1--;
-						Thread.sleep(1000);
-						if(timerFolder1 == -1) {
-							timerFolder1 = 10;
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		// If all folders are valid
+		if(UtilPreferences.isFolderExistsByName("Folder1")) {
+			processStatusFolder1.setText("Status: Started");
+			processStatusFolder1.setBackground(Color.GREEN);
+			
+			processTimerFolder1.setText("Starting...");
+			
+			if(threadFolder1.isAlive()) {
+				timerFolder1 = 10;
+				threadFolder1.stop();
 			}
-		});
-		
-		threadFolder1.start();
+			
+			threadFolder1 = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(2000);
+						while (true) {
+							processTimerFolder1.setText(intToTime(timerFolder1));
+							timerFolder1--;
+							Thread.sleep(1000);
+							if(timerFolder1 == -1) {
+								timerFolder1 = 10;
+							} // If time is 0, it means that it will start processing 
+							else if(timerFolder1 == 0) {
+								if(UtilPreferences.isFolderExistsByName("Folder2")) {
+									
+								} else {
+									processTimerFolder1.setText(intToTime(timerFolder1));
+									Thread.sleep(1000);
+									stopProcessFolder1();
+								}
+								
+							}
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			threadFolder1.start();
+		} else {
+			stopProcessFolder1();
+			JOptionPane.showMessageDialog(this, "Path from Folder 1 not found. Define the path before starting!", "Choose Folder", JOptionPane.INFORMATION_MESSAGE);
+			openChooseFolder();
+		}
 	}
 	
 	private void startProcessFolder2() throws InterruptedException {
-		processStatusFolder2.setText("Status: Started");
-		processStatusFolder2.setBackground(Color.GREEN);
 		
-		processTimerFolder2.setText("Starting...");
-		
-		if(threadFolder2.isAlive()) {
-			timerFolder2 = 10;
-			threadFolder2.stop();
-		}
-		
-		threadFolder2 = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(2000);
-					while (true) {
-						processTimerFolder2.setText(intToTime(timerFolder2));
-						timerFolder2--;
-						Thread.sleep(1000);
-						if(timerFolder2 == -1) {
-							timerFolder2 = 10;
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		// If folder is valid
+		if(UtilPreferences.isFolderExistsByName("Folder2")) {
+			processStatusFolder2.setText("Status: Started");
+			processStatusFolder2.setBackground(Color.GREEN);
+			
+			processTimerFolder2.setText("Starting...");
+			
+			if(threadFolder2.isAlive()) {
+				timerFolder2 = 10;
+				threadFolder2.stop();
 			}
-		});
-		
-		threadFolder2.start();
+			
+			threadFolder2 = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(2000);
+						while (true) {
+							processTimerFolder2.setText(intToTime(timerFolder2));
+							timerFolder2--;
+							Thread.sleep(1000);
+							if(timerFolder2 == -1) {
+								timerFolder2 = 10;
+							} // If time is 0, it means that it will start processing 
+							else if(timerFolder2 == 0) {
+								if(UtilPreferences.isFolderExistsByName("Folder2")) {
+									
+								} else {
+									processTimerFolder2.setText(intToTime(timerFolder2));
+									Thread.sleep(1000);
+									stopProcessFolder2();
+								}
+								
+							}
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			threadFolder2.start();
+		} else {
+			stopProcessFolder2();
+			JOptionPane.showMessageDialog(this, "Path from Folder 2 not found. Define the path before starting!", "Choose Folder", JOptionPane.INFORMATION_MESSAGE);
+			openChooseFolder();
+		}
 	}
 	
 	private void startProcessFolder3() throws InterruptedException {
-		processStatusFolder3.setText("Status: Started");
-		processStatusFolder3.setBackground(Color.GREEN);
 		
-		processTimerFolder3.setText("Starting...");
-		
-		if(threadFolder3.isAlive()) {
-			timerFolder3 = 10;
-			threadFolder3.stop();
-		}
-		
-		threadFolder3 = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(2000);
-					while (true) {
-						processTimerFolder3.setText(intToTime(timerFolder3));
-						timerFolder3--;
-						Thread.sleep(1000);
-						if(timerFolder3 == -1) {
-							timerFolder3 = 10;
-						}
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		// If all folders are valid
+		if(UtilPreferences.isFolderExistsByName("Folder3")) {
+			processStatusFolder3.setText("Status: Started");
+			processStatusFolder3.setBackground(Color.GREEN);
+			
+			processTimerFolder3.setText("Starting...");
+			
+			if(threadFolder3.isAlive()) {
+				timerFolder3 = 10;
+				threadFolder3.stop();
 			}
-		});
-		
-		threadFolder3.start();
+			
+			threadFolder3 = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(2000);
+						while (true) {
+							processTimerFolder3.setText(intToTime(timerFolder3));
+							timerFolder3--;
+							Thread.sleep(1000);
+							if(timerFolder3 == -1) {
+								timerFolder3 = 10;
+							} // If time is 0, it means that it will start processing 
+							else if(timerFolder3 == 0) {
+								if(UtilPreferences.isFolderExistsByName("Folder3")) {
+									
+								} else {
+									processTimerFolder3.setText(intToTime(timerFolder3));
+									Thread.sleep(1000);
+									stopProcessFolder3();
+								}
+								
+							}
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			threadFolder3.start();
+		} else {
+			stopProcessFolder3();
+			JOptionPane.showMessageDialog(this, "Path from Folder 3 not found. Define the path before starting!", "Choose Folder", JOptionPane.INFORMATION_MESSAGE);
+			openChooseFolder();
+		}
 	}
 	
 	private void stopProcessAllFolders() {
@@ -649,28 +713,27 @@ public class SettingsPanel extends JPanel implements Panel {
 	}
 	
 	private void stopProcessFolder1() {
-		timerFolder1 = 10;
-		threadFolder1.stop();
 		processStatusFolder1.setText("Status: Stopped");
 		processStatusFolder1.setBackground(Color.RED);
 		processTimerFolder1.setText("99:99:99");
-		
+		timerFolder1 = 10;
+		threadFolder1.stop();
 	}
 	
 	private void stopProcessFolder2() {
-		timerFolder2 = 10;
-		threadFolder2.stop();
 		processStatusFolder2.setText("Status: Stopped");
 		processStatusFolder2.setBackground(Color.RED);
 		processTimerFolder2.setText("99:99:99");
+		timerFolder2 = 10;
+		threadFolder2.stop();
 	}
 	
 	private void stopProcessFolder3() {
-		timerFolder3 = 10;
-		threadFolder3.stop();
 		processStatusFolder3.setText("Status: Stopped");
 		processStatusFolder3.setBackground(Color.RED);
 		processTimerFolder3.setText("99:99:99");
+		timerFolder3 = 10;
+		threadFolder3.stop();
 	}
 
 	private String intToTime(int iTime) {

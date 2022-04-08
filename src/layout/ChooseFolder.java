@@ -262,9 +262,9 @@ public class ChooseFolder extends JFrame implements Panel {
 		String newPathFolder2 = pathFolder2.getText();
 		String newPathFolder3 = pathFolder3.getText();
 		
-		boolean isExistsFolder1 = UtilPreferences.isFolderExists(newPathFolder1);
-		boolean isExistsFolder2 = UtilPreferences.isFolderExists(newPathFolder2);
-		boolean isExistsFolder3 = UtilPreferences.isFolderExists(newPathFolder3);
+		boolean isExistsFolder1 = UtilPreferences.isFolderExistsByPath(newPathFolder1);
+		boolean isExistsFolder2 = UtilPreferences.isFolderExistsByPath(newPathFolder2);
+		boolean isExistsFolder3 = UtilPreferences.isFolderExistsByPath(newPathFolder3);
 		
 		// If all folders exists
 		if(isExistsFolder1 && isExistsFolder2 && isExistsFolder3) {

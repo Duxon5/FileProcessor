@@ -95,13 +95,42 @@ public class UtilPreferences {
 		}
 	}
 	
-	public static boolean isFolderExists(String path) {
+	public static boolean isFolderExistsByPath(String path) {
 		boolean isExists = false;
 		
 		File file = new File(path);
 		isExists = file.exists();
 		
 		return isExists;
+	}
+	
+	public static boolean isFolderExistsByName(String name) {
+		boolean isExists = false;
+		
+		refreshListOfPaths();
+		
+		for (FolderPath folderPath : listOfPaths) {
+			if(folderPath.getName().contentEquals(name)) {
+				File file = new File(folderPath.getPath());
+				isExists = file.exists();
+				break;
+			}
+		}
+		
+		return isExists;
+	}
+	
+	public static boolean isAllFolderExists() {
+		
+		refreshListOfPaths();
+		
+		for (FolderPath folderPath : listOfPaths) {
+			File file = new File(folderPath.getPath());
+			if(!file.exists())
+				return false;
+		}
+		
+		return true;
 	}
 	
 }

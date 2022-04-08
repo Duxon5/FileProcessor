@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import javax.swing.UIManager;
 
 import layout.ProcessorInterface;
+import util.UtilPreferences;
 
 public class App {
 
@@ -25,6 +26,9 @@ public class App {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//Load preferences from file
+		UtilPreferences.getListOfPaths();
 		
 		processor.initialize();
 
