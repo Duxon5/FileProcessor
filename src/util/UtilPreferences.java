@@ -133,4 +133,15 @@ public class UtilPreferences {
 		return true;
 	}
 	
+	public static String getFolderPath(String folderName) {
+		refreshListOfPaths();
+		
+		for (FolderPath folderPath : listOfPaths) {
+			if(folderPath.getName().contentEquals(folderName)) {
+				return folderPath.getPath();
+			}
+		}
+		
+		return "";
+	}
 }
